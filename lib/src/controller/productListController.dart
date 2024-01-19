@@ -37,8 +37,19 @@ class ProductListController extends GetxController {
 
   Future<void> addCardProduct(var data) async {
     isLoaderAddCart(true, 'fetchAddCart');
+    int id = data != null && data['id'] != null ? data['id'] : 0;
     if (data != null) {
-      await mysqlService.insertData(data);
+      final db = await mysqlService.openDataBase();
+      if (db != null) {
+        var existingData =
+            await db.query('addCartProduct', where: 'id = ?', whereArgs: [id]);
+        if (existingData.isEmpty) {
+          await mysqlService.insertData(data);
+        } else {
+          Get.snackbar('', 'Product Already in Add Card',
+              backgroundColor: Colors.red);
+        }
+      }
     }
     final db = await mysqlService.openDataBase();
     if (db != null) {

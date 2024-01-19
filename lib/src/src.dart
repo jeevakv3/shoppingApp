@@ -14,3 +14,4 @@ export 'controller/productListController.dart';
 export 'sqlService/sqlService.dart';
 export 'model/addCartResponse.dart';
 export 'ui/splashScreen.dart';
+export 'ui/checkoutView.dart';
